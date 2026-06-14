@@ -1,0 +1,767 @@
+# 📚 BCA Semester - 1
+
+## 💻 Basics Of Web Page Development
+
+> **Course:** Bachelor of Computer Applications (BCA)  
+> **Semester:** 1
+
+---
+
+# 📑 Unit 4 : JavaScript (Comprehensive Deep-Dive Manual)
+
+This manual provides an academic, highly detailed study resource for Unit 4: JavaScript. It explains every single syllabus topic in simple, student-friendly terms, accompanied by a Definition, Syntax, Attributes, and Complete Code Examples.
+
+---
+
+# 🗺️ Detailed Syllabus Table of Contents
+
+* **1. Introduction to JavaScript**
+  * 1.1 What is JavaScript? (History, scripting concept)
+  * 1.2 Client-Side vs Server-Side Scripting
+  * 1.3 How Browser Engine Executes JS (Execution Context, Call Stack)
+  * 1.4 Tag Placement Rules (`async` vs `defer` script attributes)
+  * 1.5 Syntax Guidelines, Semicolons & Comments
+* **2. Variables, Hoisting & Memory Allocation**
+  * 2.1 Variables (`var`, `let`, `const`)
+  * 2.2 Hoisting & The Temporal Dead Zone (TDZ)
+  * 2.3 Stack vs Heap Memory Allocation (Value vs Reference Types)
+  * 2.4 Primitive vs Complex Data Types
+* **3. JavaScript Operators & Type Coercion**
+  * 3.1 Arithmetic & Increment Operators
+  * 3.2 Assignment Operators
+  * 3.3 Comparison Operators (Strict Comparison `===` vs Coercive `==`)
+  * 3.4 Logical Operators
+  * 3.5 Ternary (Conditional) Operator
+  * 3.6 Operator Precedence Table
+* **4. Conditional Structures & Logic Control**
+  * 4.1 Truthy and Falsy Values
+  * 4.2 `if`, `if-else`, `if-else-if` Structures
+  * 4.3 `switch-case` Strict Matching Rules
+* **5. Loop Controls & Optimization**
+  * 5.1 Loops (`for`, `while`, `do-while`)
+  * 5.2 Infinite Loops & Browser Freezes
+  * 5.3 Comparison of Loop Performance
+* **6. Break and Continue Execution Modifiers**
+  * 6.1 `break` Statement (Scope exit)
+  * 6.2 `continue` Statement (Iteration skip)
+* **7. Dialog Boxes & Blocking Thread UI**
+  * 7.1 `alert()` (Message warnings)
+  * 7.2 `confirm()` (Yes/No boolean return)
+  * 7.3 `prompt()` (User string input return)
+  * 7.4 Thread Blocking Nature of Dialogs
+* **8. Functions & Scope Models**
+  * 8.1 User-Defined Functions (Declaration vs Expression)
+  * 8.2 Scope Models (Global, Function, Block Scope)
+  * 8.3 ES6 Arrow Functions Concept
+  * 8.4 Built-in Functions:
+    * String Methods (with return behaviors)
+    * Math Methods (rounding, random limits)
+    * Array Methods (stack operations push/pop, sorting callbacks)
+    * Date Methods (formatting, retrieval)
+* **9. Event Handler & Event Propagation**
+  * 9.1 Mouse Events (`onclick`, `ondblclick`, `onmouseover`, `onmouseout`)
+  * 9.2 Keyboard Events (`onkeypress`, `onkeyup`)
+  * 9.3 Focus Events (`onfocus`, `onblur`)
+  * 9.4 Form/Window Events (`onload`, `onchange`, `onsubmit`, `onreset`)
+  * 9.5 Event Propagation (Bubbling vs Capturing)
+  * 9.6 Prevent Default Behavior (`event.preventDefault()`)
+* **10. In-depth Form & E-mail Validation**
+  * 10.1 Validation Strategy
+  * 10.2 E-mail Regex Pattern Breakdown
+  * 10.3 Complete Form Validation Implementation Code
+
+---
+
+# 🏛️ Section 1: Introduction to JavaScript
+
+---
+
+### 1.1 What is JavaScript?
+**JavaScript (JS)** is a lightweight, interpreted, object-oriented, dynamically typed programming language.
+* **History:** It was created by **Brendan Eich** in 1995 while working at Netscape. Originally named *Mocha*, it was later renamed *LiveScript*, and finally *JavaScript* to ride on the popularity of Java. In 1997, it was standardized under the name **ECMAScript** (ES).
+* **Interpreted:** Unlike compiled languages (like C++ or Java), JavaScript does not need to be compiled before it is run. The browser reads the code line-by-line and executes it on the fly.
+
+---
+
+### 1.2 Client-Side vs Server-Side Scripting
+
+* **Client-Side Scripting:** The JavaScript code is sent to the client's web browser, and the browser executes the code locally. This is used for animations, validation, and layout updates.
+* **Server-Side Scripting:** The JavaScript code executes on a web server (using environments like **Node.js**), accesses databases, and sends the final HTML response back to the client.
+
+---
+
+### 1.3 How the Browser Executes JavaScript
+The browser uses a JavaScript Engine (e.g., **V8** in Chrome/Edge, **SpiderMonkey** in Firefox). The engine runs JavaScript using:
+1. **Execution Context:** The environment in which JavaScript runs. The first environment created is the *Global Execution Context*.
+2. **Call Stack:** A single-threaded stack structure that keeps track of the function currently executing. JavaScript can only do one thing at a time (single-threaded).
+3. **Event Loop:** Manages asynchronous actions (like timers or user clicks) by pushing them to the Call Stack when it is empty.
+
+---
+
+### 1.4 Script Tag Placement & Performance Rules
+Where you place the `<script>` tag determines how fast the page loads. When a browser loads HTML, it parses the document top-to-bottom. If it hits a `<script>` tag, it pauses parsing HTML to download and run the script. To solve this, HTML5 introduced two attributes:
+
+```
+HTML Parsing:      [========================]
+Normal Script:               [Download & Run] (HTML Paused)
+Async Script:      [===Download===]Run[=======] (HTML Paused during Run)
+Defer Script:      [===Download===]           [Run] (Executed after HTML ends)
+```
+
+1. **Normal Script (`<script src="...">`):** HTML parsing pauses while the script is downloaded and run.
+2. **Async Script (`<script async src="...">`):** The script downloads in the background. As soon as it finishes downloading, HTML parsing pauses to run the script. Order of execution is not guaranteed.
+3. **Defer Script (`<script defer src="...">`):** The script downloads in the background and only runs *after* HTML parsing is fully completed. Order of execution is preserved.
+
+---
+
+### 1.5 Syntax Guidelines
+* **Semicolons:** Semicolons separate statements. If you omit them, the JS engine automatically inserts them (Automatic Semicolon Insertion). However, it is safer to write them explicitly to avoid bugs.
+* **First Code Example:**
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BCA JS Introduction</title>
+    <!-- Defer script waits for HTML parsing to complete -->
+    <script defer>
+        console.log("Console Log: Script executed!");
+    </script>
+</head>
+<body>
+    <h1>JavaScript Execution</h1>
+    <p id="output-text">Static HTML Text</p>
+    
+    <script>
+        // Directly altering the DOM elements
+        document.getElementById("output-text").innerHTML = "Interactive text generated by JS!";
+    </script>
+</body>
+</html>
+```
+
+---
+
+# 🏛️ Section 2: Variables, Hoisting & Memory Allocation
+
+---
+
+## 2.1 Variables (`var`, `let`, `const`)
+A variable is a named container for storing data values.
+
+* **`var` (Function Scope):** Declared variables are available anywhere within the enclosing function. They ignore block structures (`if`, `for`).
+* **`let` (Block Scope):** Declared variables are available only inside the block `{ }` in which they are defined.
+* **`const` (Block Scope / Read-only):** Same scope rules as `let`, but the value cannot be reassigned.
+
+---
+
+## 2.2 Hoisting & The Temporal Dead Zone (TDZ)
+* **Hoisting:** During execution setup, JavaScript moves variable and function declarations to the top of their enclosing scope.
+  * **`var` Hoisting:** Only the declaration is hoisted, not the value. It initializes as `undefined`.
+  * **`let` and `const` Hoisting:** They are hoisted but are not initialized. They enter the **Temporal Dead Zone (TDZ)**. Any attempt to access them before the declaration line will throw a `ReferenceError`.
+
+#### Hoisting Code Example:
+```javascript
+console.log(myVar); // Outputs: undefined (hoisted var)
+var myVar = 10;
+
+try {
+    console.log(myLet); // Throws ReferenceError (Temporal Dead Zone)
+    let myLet = 20;
+} catch(err) {
+    console.log("Error caught: " + err.message);
+}
+```
+
+---
+
+## 2.3 Stack vs Heap Memory Allocation
+JavaScript manages memory in two places:
+1. **Stack Memory:** Used for static data allocation. This holds primitive values (numbers, booleans, etc.) and references (pointers) to objects. Access is very fast.
+2. **Heap Memory:** Used for dynamic allocation. This holds complex objects, arrays, and functions whose size may change. Access is slower than stack.
+
+```
+  STACK (Value Types)             HEAP (Reference Types)
++-----------------------+      +---------------------------+
+| age = 20              |      |                           |
+| isStudent = true      |      |                           |
+| studentPtr ----------+------>| { name: "Rohan", age: 20 }|
++-----------------------+      +---------------------------+
+```
+
+* **Value Copy:** Copying a primitive copies the actual value.
+* **Reference Copy:** Copying an object copies the memory address pointer. Changing the copied object changes the original object as well.
+
+#### Memory Copy Code Example:
+```javascript
+// Primitive (Stack)
+let a = 10;
+let b = a; // Copying value
+b = 20;
+console.log(a); // Outputs: 10 (unchanged)
+
+// Object (Heap Reference)
+let obj1 = { score: 90 };
+let obj2 = obj1; // Copying reference pointer
+obj2.score = 100;
+console.log(obj1.score); // Outputs: 100 (original changed!)
+```
+
+---
+
+## 2.4 Primitive vs Complex Data Types
+
+1. **Primitive Types (Immutable, stored on stack):** `Number`, `String`, `Boolean`, `Undefined`, `Null`, `BigInt`, `Symbol`.
+2. **Complex Types (Mutable, stored on heap):** `Object`, `Array`, `Function`.
+
+---
+
+# 🏛️ Section 3: JavaScript Operators & Type Coercion
+
+---
+
+### 3.1 Arithmetic Operators
+Used for math calculations.
+* `+` (Addition), `-` (Subtraction), `*` (Multiplication), `/` (Division), `%` (Modulus), `**` (Exponent).
+* **Increment/Decrement:**
+  * `++x` (Pre-increment): Increases x by 1 first, then returns the value.
+  * `x++` (Post-increment): Returns the current value of x first, then increases it.
+
+---
+
+### 3.2 Assignment Operators
+Used to write shorthand calculations (e.g. `x += 5` is `x = x + 5`).
+
+---
+
+### 3.3 Comparison Operators & Type Coercion
+* **Type Coercion:** JavaScript automatically converts data types when comparing different types.
+* **Loose Equality (`==`):** Coerces types before comparison. E.g., `5 == "5"` is `true` because the string is converted to a number.
+* **Strict Equality (`===`):** Compares both value and data type without conversion. E.g., `5 === "5"` is `false`.
+
+#### Coercion Example:
+```javascript
+console.log(0 == false);  // true (0 is coerced to boolean false)
+console.log(0 === false); // false (number is not equal to boolean)
+console.log(null == undefined);  // true
+console.log(null === undefined); // false
+```
+
+---
+
+### 3.4 Logical Operators
+* `&&` (AND): Evaluates left to right. Returns the first falsy value, or the last value if all are truthy.
+* `||` (OR): Returns the first truthy value.
+* `!` (NOT): Inverts boolean state.
+
+---
+
+### 3.5 Ternary (Conditional) Operator
+A shorthand for writing simple `if-else` blocks.
+```javascript
+let statusMessage = (score >= 40) ? "Passed" : "Failed";
+```
+
+---
+
+### 3.6 Operator Precedence Table
+Determines the order in which operators are evaluated (similar to BODMAS rules in math).
+
+| Order | Operator Type | Symbols | Associativity |
+| :--- | :--- | :--- | :--- |
+| **1** | Grouping | `( )` | n/a |
+| **2** | Member Access | `.` `[ ]` | Left-to-Right |
+| **3** | Post-Increment / Decrement | `x++` `x--` | n/a |
+| **4** | Pre-Increment / Logical NOT | `++x` `--x` `!` | Right-to-Left |
+| **5** | Exponentiation | `**` | Right-to-Left |
+| **6** | Multiplication / Division / Modulo | `*` `/` `%` | Left-to-Right |
+| **7** | Addition / Subtraction | `+` `-` | Left-to-Right |
+| **8** | Comparison | `<` `<=` `>` `>=` | Left-to-Right |
+| **9** | Equality / Strict Equality | `==` `===` `!=` `!==` | Left-to-Right |
+| **10**| Logical AND | `&&` | Left-to-Right |
+| **11**| Logical OR | `||` | Left-to-Right |
+| **12**| Ternary Operator | `? :` | Right-to-Left |
+| **13**| Assignment | `=` `+=` `-=` `*=` `/=` | Right-to-Left |
+
+---
+
+# 🏛️ Section 4: Conditional Structures & Logic Control
+
+---
+
+### 4.1 Truthy and Falsy Values
+When evaluated inside conditional expressions, JavaScript converts values to booleans:
+* **Falsy Values:** There are exactly 8 falsy values:
+  1. `false`
+  2. `0` (Zero)
+  3. `-0` (Negative zero)
+  4. `0n` (BigInt zero)
+  5. `""` (Empty string)
+  6. `null`
+  7. `undefined`
+  8. `NaN` (Not a Number)
+* **Truthy Values:** Every value not listed in the falsy list is truthy (e.g., `"0"`, `"false"`, `[]`, `{}`).
+
+---
+
+### 4.2 Conditional Code Structures
+```javascript
+let score = 75;
+
+if (score >= 90) {
+    console.log("Grade A");
+} else if (score >= 70) {
+    console.log("Grade B"); // Executes
+} else {
+    console.log("Grade C");
+}
+```
+
+---
+
+### 4.3 Switch Case Strict Comparison Rules
+The `switch` statement evaluates an expression and matches it against case clauses. **It uses strict equality (`===`) for matching.** No type coercion occurs.
+
+```javascript
+let code = "2";
+switch (code) {
+    case 2:
+        console.log("Matched Number 2");
+        break;
+    case "2":
+        console.log("Matched String '2'"); // This executes
+        break;
+}
+```
+
+---
+
+# 🏛️ Section 5: Loop Controls & Optimization
+
+---
+
+### 5.1 Loops Overview
+* **`for` Loop:** Best when you know the number of iterations in advance.
+* **`while` Loop:** Best when the loop runs based on a condition rather than a count.
+* **`do-while` Loop:** Similar to the while loop, but guarantees the block runs **at least once** before checking the condition.
+
+---
+
+### 5.2 Infinite Loops & Browser Freezes
+An infinite loop occurs when the loop condition never becomes false (e.g. omitting the loop counter increment step). Because JavaScript is single-threaded, an infinite loop blocks the Call Stack, preventing user clicks, layout rendering, and event handlers. This freezes the browser tab.
+
+#### Infinite Loop Example (Do Not Run):
+```javascript
+// This loop will run forever because i never changes
+let i = 1;
+while (i < 5) {
+    console.log("Infinite Loop");
+    // Missing i++
+}
+```
+
+---
+
+### 5.3 Loop Optimization Comparison
+For peak performance:
+* Minimize work inside the loop body.
+* Cache the array length rather than reading it on every iteration:
+```javascript
+let arr = [1, 2, 3, 4, 5];
+// Optimized: length read once, not checked on every loop iteration
+for (let i = 0, len = arr.length; i < len; i++) {
+    console.log(arr[i]);
+}
+```
+
+---
+
+# 🏛️ Section 6: Break and Continue Execution Modifiers
+
+---
+
+### 6.1 `break` Statement
+Instantly exits the loop body. Control flow jumps to the statement immediately following the loop.
+
+---
+
+### 6.2 `continue` Statement
+Skips the remaining code inside the loop block for the current iteration and jumps directly to the next condition check/iteration step.
+
+---
+
+### Code Example:
+```html
+<script>
+    console.log("Break Demo:");
+    for (let i = 1; i <= 5; i++) {
+        if (i === 4) break; // Stops loop completely
+        console.log(i); // Prints 1, 2, 3
+    }
+
+    console.log("Continue Demo:");
+    for (let i = 1; i <= 5; i++) {
+        if (i === 3) continue; // Skips printing 3
+        console.log(i); // Prints 1, 2, 4, 5
+    }
+</script>
+```
+
+---
+
+# 🏛️ Section 7: Dialog Boxes & Blocking Thread UI
+
+Browser-native dialog boxes are synchronous and block the main execution thread.
+
+1. **`alert(message)`:** Shows a message box with an OK button.
+2. **`confirm(question)`:** Shows a dialog box with OK and Cancel buttons. Returns `true` if the user clicks OK, and `false` if they click Cancel.
+3. **`prompt(question, default)`:** Shows an input field. Returns the user's input string, or `null` if they click Cancel.
+
+---
+
+### Thread Blocking Nature:
+When a dialog box is visible, the browser's JavaScript engine pauses. HTML rendering is suspended, timers are paused, and animations stop. Control is only returned to the engine after the user closes the dialog box.
+
+---
+
+### Code Example:
+```javascript
+console.log("Before alert");
+alert("Click OK to continue"); // Thread freezes here
+console.log("After alert");   // Only executes after OK is clicked
+```
+
+---
+
+# 🏛️ Section 8: Functions & Scope Models
+
+---
+
+## 8.1 Functions (Declaration vs Expression)
+
+* **Function Declaration:** Hoisted completely during setup. You can call the function before its declaration line in the code file.
+* **Function Expression:** Assigned to a variable. The variable declaration is hoisted, but not the function value. Calling it early throws a `TypeError`.
+
+#### Syntax:
+```javascript
+// Function Declaration
+function greet() { return "Hello"; }
+
+// Function Expression
+const sayHi = function() { return "Hi"; };
+```
+
+---
+
+## 8.2 Scope Models
+Scope determines the accessibility of variables.
+1. **Global Scope:** Variables declared outside any function or block are accessible from anywhere.
+2. **Function (Local) Scope:** Variables declared with `var`, `let`, or `const` inside a function are accessible only within that function.
+3. **Block Scope:** Variables declared with `let` or `const` inside `{ }` curly braces (like `if` or `for`) cannot be accessed outside that block.
+
+---
+
+## 8.3 ES6 Arrow Functions Concept
+Introduced in ES6, arrow functions provide a shorter syntax for writing function expressions. They are not hoisted and do not have their own binding for `this`.
+
+#### Syntax:
+```javascript
+const add = (a, b) => a + b;
+```
+
+---
+
+## 8.4 Built-in Functions & Methods
+
+---
+
+### A. String Methods
+* `length`: Property returning character count.
+* `indexOf(sub)`: Finds first match index. Returns `-1` if not found.
+* `slice(start, end)`: Extracts string segment from `start` index up to (but not including) `end` index.
+* `replace(find, replace)`: Replaces a value. By default, it only replaces the first occurrence.
+
+---
+
+### B. Math Methods
+* `Math.floor()` / `Math.ceil()`: Round down / up.
+* `Math.random()`: Generates a value in the range `[0, 1)`.
+
+---
+
+### C. Array Methods
+* `push(val)` / `pop()`: Add to end / Remove from end.
+* `sort(compareFunc)`: By default, `sort()` converts elements to strings and compares their UTF-16 code values. For numbers, you must provide a compare function.
+
+```javascript
+let nums = [40, 100, 1];
+nums.sort((a, b) => a - b); // Correct numeric sorting: [1, 40, 100]
+```
+
+---
+
+### D. Date Methods
+* `getFullYear()` / `getMonth()` (0-indexed month) / `getDate()` (day of the month).
+
+---
+
+# 🏛️ Section 9: Event Handler & Event Propagation
+
+---
+
+### 9.1 Mouse Events
+* `onclick`: Single click.
+* `ondblclick`: Double click.
+* `onmouseover` / `onmouseout`: Triggers when mouse cursor enters or leaves the element's boundary.
+
+---
+
+### 9.2 Keyboard Events
+* `onkeyup`: Triggered when a pressed key is released.
+* `onkeypress`: Triggered when a character key is pressed down (deprecated in modern standards).
+
+---
+
+### 9.3 Focus Events
+* `onfocus`: Triggered when an element gains focus (e.g. clicking into a text box).
+* `onblur`: Triggered when an element loses focus.
+
+---
+
+### 9.4 Form/Window Events
+* `onload`: Triggers after the page resource dependencies (images, scripts, CSS) have finished loading.
+* `onchange`: Triggers when an element's value changes (e.g. select element choice).
+* `onsubmit`: Triggers before a form submits.
+* `onreset`: Triggers when form fields are reset.
+
+---
+
+### 9.5 Event Propagation (Bubbling vs Capturing)
+When an event happens on an element inside another element, browsers run two phases:
+1. **Capturing Phase:** The event starts at the root `window` and travels down the DOM tree to the target element.
+2. **Bubbling Phase (Default):** The event starts at the target element and travels up the DOM tree to the root `window`.
+
+```
+  Capturing Phase (Down)         Bubbling Phase (Up)
+      window                         window  ^
+        |                              |     |
+      <body>                           <body>|
+        |                              |     |
+      <div> (Target) ---------> Element Target
+```
+
+---
+
+### 9.6 Prevent Default Behavior
+Use `event.preventDefault()` to stop the browser's default behavior for an event (such as preventing a submit button from reloading the page).
+
+#### Example Code:
+```html
+<a href="https://google.com" id="myLink">Google</a>
+<script>
+    document.getElementById("myLink").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevents browser from navigating to link
+        console.log("Navigation blocked!");
+    });
+</script>
+```
+
+---
+
+# 🏛️ Section 10: In-depth Form & E-mail Validation
+
+---
+
+### 10.1 Validation Strategy
+Client-side form validation is used to check user input before sending it to a server. If the input format is invalid, the script stops the submit event and shows error messages inline.
+
+---
+
+### 10.2 E-mail Regex Pattern Breakdown
+```javascript
+var pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+```
+* `/ ... /`: Defines the regular expression boundary.
+* `^`: Asserts start of the email string.
+* `[a-zA-Z0-9._-]+`: Matches one or more characters for the email name (allows letters, numbers, dots, underscores, and hyphens).
+* `@`: Matches the mandatory `@` symbol.
+* `[a-zA-Z0-9.-]+`: Matches the domain name (e.g., `gmail`, `yahoo`).
+* `\.`: Matches the dot character.
+* `[a-zA-Z]{2,6}`: Matches the top-level domain (e.g., `com`, `org`, `in`), requiring between 2 and 6 letters.
+* `$`: Asserts the end of the email string.
+
+---
+
+### 10.3 Complete Form Validation Implementation Code
+
+Here is a fully functional registration page featuring CSS styling and in-depth JS validations for empty inputs, numeric length, and email format match:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BCA Academic Form Validation Portal</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            padding: 40px 20px;
+        }
+        .form-card {
+            background: #ffffff;
+            max-width: 500px;
+            padding: 40px;
+            margin: 0 auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .form-card h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            color: #343a40;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 15px;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus {
+            border-color: #80bdff;
+            outline: none;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 6px;
+            min-height: 18px;
+        }
+        .submit-btn {
+            background-color: #28a745;
+            color: #ffffff;
+            border: none;
+            padding: 14px 20px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-card">
+        <h2>Student Portal Registration</h2>
+        
+        <!-- onsubmit returns the validateForm() result. If false, navigation/reset is blocked -->
+        <form id="registrationForm" onsubmit="return validateForm(event)">
+            
+            <!-- Full Name Input -->
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" placeholder="Enter your full name">
+                <div class="error-message" id="nameError"></div>
+            </div>
+
+            <!-- Email Input -->
+            <div class="form-group">
+                <label for="email">E-mail Address</label>
+                <input type="text" id="email" placeholder="example@domain.com">
+                <div class="error-message" id="emailError"></div>
+            </div>
+
+            <!-- Mobile Phone Input -->
+            <div class="form-group">
+                <label for="phone">Mobile Number</label>
+                <input type="text" id="phone" placeholder="Enter 10-digit number">
+                <div class="error-message" id="phoneError"></div>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Registration</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm(event) {
+            // Get form values
+            var nameValue = document.getElementById("fullName").value.trim();
+            var emailValue = document.getElementById("email").value.trim();
+            var phoneValue = document.getElementById("phone").value.trim();
+
+            // Error element references
+            var nameError = document.getElementById("nameError");
+            var emailError = document.getElementById("emailError");
+            var phoneError = document.getElementById("phoneError");
+
+            // Reset error messages
+            nameError.innerHTML = "";
+            emailError.innerHTML = "";
+            phoneError.innerHTML = "";
+
+            var isValid = true;
+
+            // 1. Full Name Validation
+            if (nameValue === "") {
+                nameError.innerHTML = "⚠️ Full name is required.";
+                isValid = false;
+            } else if (nameValue.length < 3) {
+                nameError.innerHTML = "⚠️ Name must be at least 3 characters long.";
+                isValid = false;
+            }
+
+            // 2. Email Address Regex Match Validation
+            var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (emailValue === "") {
+                emailError.innerHTML = "⚠️ E-mail address is required.";
+                isValid = false;
+            } else if (!emailPattern.test(emailValue)) {
+                emailError.innerHTML = "⚠️ Please enter a valid e-mail structure (e.g. user@gmail.com).";
+                isValid = false;
+            }
+
+            // 3. Mobile Number digits Validation
+            var phonePattern = /^[0-9]{10}$/;
+            if (phoneValue === "") {
+                phoneError.innerHTML = "⚠️ Mobile number is required.";
+                isValid = false;
+            } else if (!phonePattern.test(phoneValue)) {
+                phoneError.innerHTML = "⚠️ Mobile number must contain exactly 10 digits.";
+                isValid = false;
+            }
+
+            // If form validation fails, prevent default submit form action
+            if (!isValid) {
+                event.preventDefault();
+                return false;
+            }
+
+            alert("Form validated successfully! Sending data...");
+            return true;
+        }
+    </script>
+</body>
+</html>
+```
+
+---
+*Created for BCA Semester 1 Academic Reference. Master these concepts to build standards-compliant, dynamic, and validation-ready Web Systems.*
